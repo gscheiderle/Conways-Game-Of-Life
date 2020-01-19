@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1579429687 source:c:\xampp\htdocs\c-conway\c-conway\main.c
+	<stdio.h>
+	<stdlib.h>
+
