@@ -21,7 +21,10 @@ Ich habe den kompletten Order hochgeladen.
 Wenn nichts verändert wird, startet das Programm mit einem Gleiter in einer Welt deren Größe und GenerationenAnzahl beim Programmstart abgefragt wird.
 
 
-Translation by deepl.com:
+
+Translated with www.DeepL.com/Translator (free version)
+
+
 
 The attempt to write Conway's Game of Life in C
 
@@ -44,5 +47,5 @@ And I have merged this with CODE::BLOCKS in the present script.
 I have uploaded the complete order.
 If nothing is changed, the program will start with a glider in a world whose size and number of generations is queried at program start.
 
-Translated with www.DeepL.com/Translator (free version)
+
 
