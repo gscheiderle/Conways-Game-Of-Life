@@ -1,7 +1,7 @@
 # Conways-Game-Of-Life
 Der Versuch, Conways Game of Life in C zu schreiben
 
-... als Freizeit-Programmierer. Mit PHP ist mir daß schon mit Bildausgabe geglückt. Leider ist das Ganze sehr unübersichtlich :-(
+... als Freizeit-Programmierer. Mit PHP ist mir das schon mit Bildausgabe geglückt. Leider ist das Ganze sehr unübersichtlich :-(
 Deshalb werde ich damit auch keine Zeit mehr verschwenden - und vor allem fehlt die Geschwindigkeit.
 
 In C geschrieben funktioniert es auch, allein es fehlt die Modulierung.
