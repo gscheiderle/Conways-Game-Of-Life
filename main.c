@@ -2,19 +2,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BUF 1024
+#define BUF 2048
 #define ZEILENLAENGE
 #define NUMLETTERS 100
 #define ACTIVE 1
 #define INACTIVE 0
 #define ACTIVE_SYMBOL '+'
-#define INACTIVE_SYMBOL '.'
+#define INACTIVE_SYMBOL ' '
 
 
 int main(void) {
 
 
-   int i, i_3, j, zeile, spalte;
+   int i, j, zeile, spalte;
+
+   int i_3 = 0;
 
    int y, yy, yx, x, xx, xy; // zur Definition rund um die aktiven  Zellen
    int *nw, *n, *no, *w, *o, *so, *s, *sw; // Bezeichnung (Kompass) für jene als Gedächtnishilfe
@@ -34,8 +36,6 @@ int main(void) {
 
     int gg, g, pgg, hh, h, phh ;  // zur Definition rund um die inaktiven  Zellen
 
-//    int temp;
-//        temp=0;
 
 
     // Anlegen der Matrix ( Spielfeld, die Welt )
@@ -54,8 +54,6 @@ int main(void) {
     scanf("%d", &generation);
 
     printf("\n");
-
-
 
    /* Speicher reservieren für die int-Zeiger (=zeile) */
 
@@ -98,11 +96,11 @@ int main(void) {
 // Other startup configurations are copied to the file "generation.csv".
 // Like the attached PULSAR
 
-       matrix[4][4]=ACTIVE;
-       matrix[5][5]=ACTIVE;
-       matrix[6][3]=ACTIVE;
-       matrix[6][4]=ACTIVE;
-       matrix[6][5]=ACTIVE;
+//       matrix[4][4]=ACTIVE;
+//       matrix[5][5]=ACTIVE;
+//       matrix[6][3]=ACTIVE;
+//       matrix[6][4]=ACTIVE;
+//       matrix[6][5]=ACTIVE;
 
 
 for ( count_generation = 0; count_generation < generation; count_generation++ ) {
