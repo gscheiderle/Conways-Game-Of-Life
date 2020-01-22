@@ -7,8 +7,8 @@
 #define NUMLETTERS 100
 #define ACTIVE 1
 #define INACTIVE 0
-#define ACTIVE_SYMBOL '*'
-#define INACTIVE_SYMBOL ' '
+#define ACTIVE_SYMBOL '+'
+#define INACTIVE_SYMBOL '.'
 
 
 int main(void) {
@@ -19,8 +19,9 @@ int main(void) {
    int y, yy, yx, x, xx, xy; // zur Definition rund um die aktiven  Zellen
    int *nw, *n, *no, *w, *o, *so, *s, *sw; // Bezeichnung (Kompass) für jene als Gedächtnishilfe
 
-   int zaehler_1;
+   int zaehler_1, zaehler_2;
    zaehler_1=0;
+   zaehler_2=0;
 
    /* Matrix ist Zeiger auf int-Zeiger. */
    int ** matrix;
@@ -113,9 +114,10 @@ for ( count_generation = 0; count_generation < generation; count_generation++ ) 
 
 
     FILE *fp;
+
     record_t zeilen_i[NUMLETTERS], spalten_j[NUMLETTERS];
     size_t count = 0;
-    fp = fopen(("generation.csv"), "r+");
+    fp = fopen("generation.csv", "r+");
     if (fp == NULL) { fprintf(stderr, "Fehler beim Oeffnen der Datei\n");
     return 1;
     }
@@ -138,37 +140,33 @@ int jj=0;
 // Ohne Ausgabe auf der Konsole (nur das letzte Bild)
 // z.B. Geschwigkeit messen mit riesigen Matrix'
 
-if ( count_generation == generation-1 ) {
+ if ( count_generation == generation-1 ) {
 
-        printf("\n\n");
+        printf("\n");
 
    // Inhalt der Matrix entsprechend ausgeben
    for (i = 0; i < zeile; i++) {
       for (j = 0; j < spalte; j++)
-         // printf("%d ", matrix[i][j]);
+        // printf("%p ", &matrix[i][j]);
 
-          if (matrix[i][j] == INACTIVE)
-              printf("%c ", INACTIVE_SYMBOL);
-          else
-              printf("%c ", ACTIVE_SYMBOL);
+        if (matrix[i][j] == INACTIVE)
+            printf("%c ", INACTIVE_SYMBOL);
+        else
+            printf("%c ", ACTIVE_SYMBOL);
 
-
-          printf("\n");
-
+            printf("\n");
    }
-
 }
 
 
 /********************************************************************************************************/
 
 
-fp = fopen("generation.csv", "w+");
+fp = fopen("generation.csv", "w");
 
 if(fp == NULL) {
 	printf("Datei konnte nicht geoeffnet werden.\n");
     }
-
 if(fp != NULL) {
 
 /********************************************************************************************************/
@@ -181,95 +179,14 @@ if(fp != NULL) {
 
             if ( matrix[i][j] == ACTIVE ) {
 
-     yy= i+1; // zeile ausgehend vom aktuellen Point (c)
-     y=i-1;   // minus 1 Zeile ...
-     xx=j+1;  // plus eine Spalte ...
-     x=j-1;   // minus eine Spalte ...
 
-    nw=&matrix[y][x];
-    n =&matrix[y][j];
-    no=&matrix[y][xx];
-    w =&matrix[i][x];
-    o =&matrix[i][xx];
-    sw=&matrix[yy][x];
-    s =&matrix[yy][j];
-    so=&matrix[yy][xx];
+     xy= i;    // gleiche Zeile
+     yy= i+1;  // plus 1 Zeile
+     y=  i-1;  // minus 1 Zeile
 
-
-
-if ( *nw == ACTIVE ) {zaehler_1++ ; }
-if ( *n == ACTIVE )  {zaehler_1++ ; }
-if ( *no == ACTIVE ) {zaehler_1++ ; }
-if ( *w == ACTIVE )  {zaehler_1++ ; }
-if ( *o == ACTIVE )  {zaehler_1++ ; }
-if ( *sw == ACTIVE ) {zaehler_1++ ; }
-if ( *s == ACTIVE )  {zaehler_1++ ; }
-if ( *so == ACTIVE ) {zaehler_1++ ; }
-
-
-
-if ( zaehler_1 == 2 || zaehler_1 == 3 ) {
-
-        fprintf(fp ,"%d,%d\n", i, j );
-    }
-
-zaehler_1=0;
-
-            }
-        }
-    }
-
-
-/*************************************************************************************************************/
-/***********************  INACTIVE NACHBARN DER ACTIVEN AUF DEREN ACTIVE UNTERSUCHEN  ************************/
-/*************************************************************************************************************/
-
-
-
-for (i = 0; i < zeile; i++) {
-      for (j = 0, i_3 = 0; j < spalte; j++, i_3++)
-
-        if ( matrix[i][j] == ACTIVE ) {
-
-
-     ggg  = i-2;  // minus 2 Zeilen
-     gg   = i-1;  // minus 1 Zeile
-     g    = i;    // gleiche Zeile
-     pggg = i+2;  // plus 2  Zeilen
-     pgg  = i+1;  // plus 1  Zeile
-
-     hhh  = j-2;  // minus 2 Spalten
-     hh   = j-1;  // minus 1 Spalte
-     h    = j;    // gleiche Spalte
-     phhh = j+2;  // plus 2  Spalten
-     phh  = j+1;  // plus 1  Spalte
-
-//
-
-int i_Array[]={gg,gg,gg,g,g,pgg,pgg,pgg};
-int j_Array[]={hh,h,phh,hh,phh,hh,h,phh};
-
-
-for (i_3 = 0; i_3 < 8; i_3++ ) {
-
-int ppi;
-int ppj;
-
-ppi=i_Array[i_3];
-ppj=j_Array[i_3];
-
-i=i_Array[i_3];
-j=j_Array[i_3];
-
-
-     int xy = i;   // gleiche Zeile
-     int yy = i+1; // plus eine Zeile
-     int y  = i-1; // minus 1 Zeile ...
-
-     int yx = j;   // gleiche Spalte
-     int xx = j+1; // plus eine Spalte ...
-     int x  = j-1; // minus eine Spalte ...
-
+     yx= j;    // gleiche Spalte
+     xx= j+1;  // plus eine Spalte
+     x=  j-1;  // minus eine Spalte
 
     nw=&matrix[y][x];
     n =&matrix[y][yx];
@@ -282,34 +199,115 @@ j=j_Array[i_3];
 
 
 
-    if ( *nw == ACTIVE ) {zaehler_1++ ; }
-    if ( *n  == ACTIVE ) {zaehler_1++ ; }
-    if ( *no == ACTIVE ) {zaehler_1++ ; }
-    if ( *w  == ACTIVE ) {zaehler_1++ ; }
-    if ( *o  == ACTIVE ) {zaehler_1++ ; }
-    if ( *sw == ACTIVE ) {zaehler_1++ ; }
-    if ( *s  == ACTIVE ) {zaehler_1++ ; }
-    if ( *so == ACTIVE ) {zaehler_1++ ; }
+if ( *nw == ACTIVE ) {zaehler_1++ ; }
+if ( *n  == ACTIVE ) {zaehler_1++ ; }
+if ( *no == ACTIVE ) {zaehler_1++ ; }
+if ( *w  == ACTIVE ) {zaehler_1++ ; }
+if ( *o  == ACTIVE ) {zaehler_1++ ; }
+if ( *sw == ACTIVE ) {zaehler_1++ ; }
+if ( *s  == ACTIVE ) {zaehler_1++ ; }
+if ( *so == ACTIVE ) {zaehler_1++ ; }
 
 
-if ( zaehler_1 == 3 ) {
+
+if ( zaehler_1 == 2 || zaehler_1 == 3 ) {
 
         fprintf(fp ,"%d,%d\n", i, j );
+
     }
 
-zaehler_1=0;
+    zaehler_1=0;
 
-}
+     xy= 0;
+     yy= 0;
+     y=0;
 
+     yx=0;
+     xx=0;
+     x=0;
+
+
+     gg   = i-1;  // minus 1 Zeile
+     g    = i;    // gleiche Zeile
+     pgg  = i+1;  // plus 1  Zeile
+
+     hh   = j-1;  // minus 1 Spalte
+     h    = j;    // gleiche Spalte
+     phh  = j+1;  // plus 1  Spalte
+
+
+
+// 8 Umgebungs-Zellen
+// 1 Array für die Zeilen (i)
+// 1 Array für die Spalten (j)
+
+int i_Array[]={gg,gg,gg,g,g,pgg,pgg,pgg};
+int j_Array[]={hh,h,phh,hh,phh,hh,h,phh};
+
+
+int ppi=0;
+int ppj=0;
+
+for (i_3 = 0; i_3 < 8; i_3++ ) {
+
+ppi=i_Array[i_3];
+ppj=j_Array[i_3];
+
+
+     int xy = ppi;   // gleiche Zeile
+     int yy = ppi+1; // plus eine Zeile
+     int y  = ppi-1; // minus 1 Zeile ...
+
+     int yx = ppj;   // gleiche Spalte
+     int xx = ppj+1; // plus eine Spalte ...
+     int x  = ppj-1; // minus eine Spalte ...
+
+
+     int *nnw, *nn, *nno, *nw, *no, *nsw, *ns, *nso;
+
+
+    nnw=&matrix[y][x];
+    nn =&matrix[y][yx];
+    nno=&matrix[y][xx];
+    nw =&matrix[xy][x];
+    no =&matrix[xy][xx];
+    nsw=&matrix[yy][x];
+    ns =&matrix[yy][yx];
+    nso=&matrix[yy][xx];
+
+
+
+    if ( *nnw == ACTIVE ) {zaehler_2++ ; }
+    if ( *nn  == ACTIVE ) {zaehler_2++ ; }
+    if ( *nno == ACTIVE ) {zaehler_2++ ; }
+    if ( *nw  == ACTIVE ) {zaehler_2++ ; }
+    if ( *no  == ACTIVE ) {zaehler_2++ ; }
+    if ( *nsw == ACTIVE ) {zaehler_2++ ; }
+    if ( *ns  == ACTIVE ) {zaehler_2++ ; }
+    if ( *nso == ACTIVE ) {zaehler_2++ ; }
+
+    if ( zaehler_2 == 3 ) {
+
+        fprintf(fp ,"%d,%d\n", ppi, ppj );
+
+
+            }
+
+         zaehler_2 = 0;
 
         }
     }
+
+
+    }
+
 }
 
-    	//printf("Adressen wurden geschrieben.\n");
+    	// printf("Adressen wurden geschrieben.\n");
 
           fclose(fp);
 
+}
 
 /****************************  MATRIX LEEREN  ************************************/
 
@@ -321,11 +319,7 @@ zaehler_1=0;
         }
     }
 
-/*********************************************************************************/
-
 }
-
-
 
 /**************************************************************************************************************/
 /*****************************************  SPEICHER FREIGEBEN  ***********************************************/
@@ -343,3 +337,4 @@ zaehler_1=0;
 
 return 0;
 }
+
