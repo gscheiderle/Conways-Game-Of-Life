@@ -25,7 +25,6 @@ int main(void) {
 
    /* Matrix ist Zeiger auf int-Zeiger. */
    int ** matrix;
-   int ZEILENLAENGE;
 
     int count_generation;
         count_generation=0;
@@ -33,10 +32,10 @@ int main(void) {
     int generation;
         generation=0;
 
-    int ggg, gg, g, pggg, pgg, hhh, hh, h, phhh, phh ;  // zur Definition rund um die inaktiven  Zellen
+    int gg, g, pgg, hh, h, phh ;  // zur Definition rund um die inaktiven  Zellen
 
-    int temp;
-        temp=0;
+//    int temp;
+//        temp=0;
 
 
     // Anlegen der Matrix ( Spielfeld, die Welt )
@@ -108,7 +107,6 @@ int main(void) {
 
 for ( count_generation = 0; count_generation < generation; count_generation++ ) {
 
-
     typedef struct { int number_2; int number; }
     record_t;
 
@@ -137,8 +135,11 @@ int jj=0;
             matrix[ii][jj] = ACTIVE ;
    }
 
-// Ohne Ausgabe auf der Konsole (nur das letzte Bild)
-// z.B. Geschwigkeit messen mit riesigen Matrix'
+// Ganz ohne Ausgabe auf der Konsole (evtl, nur das letzte Bild)
+// z.B. um die Geschwigkeit mit riesigen Matrix' zu messen
+
+// Completely without output to the console (possibly, only the last image)
+// e.g. to measure the speed with huge 'Matrix
 
  if ( count_generation == generation-1 ) {
 
@@ -158,9 +159,7 @@ int jj=0;
    }
 }
 
-
 /********************************************************************************************************/
-
 
 fp = fopen("generation.csv", "w");
 
@@ -171,8 +170,6 @@ if(fp != NULL) {
 
 /********************************************************************************************************/
 
-
-
     for (i = 0; i < zeile; i++) {
 
         for (j = 0 ; j < spalte; j++) {
@@ -180,11 +177,11 @@ if(fp != NULL) {
             if ( matrix[i][j] == ACTIVE ) {
 
 
-     xy= i;    // gleiche Zeile
+     xy= i;    // gleiche Zeile (line)
      yy= i+1;  // plus 1 Zeile
      y=  i-1;  // minus 1 Zeile
 
-     yx= j;    // gleiche Spalte
+     yx= j;    // gleiche Spalte (column)
      xx= j+1;  // plus eine Spalte
      x=  j-1;  // minus eine Spalte
 
@@ -198,7 +195,6 @@ if(fp != NULL) {
     so=&matrix[yy][xx];
 
 
-
 if ( *nw == ACTIVE ) {zaehler_1++ ; }
 if ( *n  == ACTIVE ) {zaehler_1++ ; }
 if ( *no == ACTIVE ) {zaehler_1++ ; }
@@ -209,14 +205,13 @@ if ( *s  == ACTIVE ) {zaehler_1++ ; }
 if ( *so == ACTIVE ) {zaehler_1++ ; }
 
 
-
 if ( zaehler_1 == 2 || zaehler_1 == 3 ) {
 
-        fprintf(fp ,"%d,%d\n", i, j );
+     fprintf(fp ,"%d,%d\n", i, j );
 
-    }
+     }
 
-    zaehler_1=0;
+zaehler_1=0;
 
      xy= 0;
      yy= 0;
@@ -225,7 +220,6 @@ if ( zaehler_1 == 2 || zaehler_1 == 3 ) {
      yx=0;
      xx=0;
      x=0;
-
 
      gg   = i-1;  // minus 1 Zeile
      g    = i;    // gleiche Zeile
@@ -236,10 +230,13 @@ if ( zaehler_1 == 2 || zaehler_1 == 3 ) {
      phh  = j+1;  // plus 1  Spalte
 
 
-
 // 8 Umgebungs-Zellen
 // 1 Array für die Zeilen (i)
 // 1 Array für die Spalten (j)
+
+// 8 ambient cells
+// 1 array for the lines (i)
+// 1 array for the columns (j)
 
 int i_Array[]={gg,gg,gg,g,g,pgg,pgg,pgg};
 int j_Array[]={hh,h,phh,hh,phh,hh,h,phh};
@@ -265,7 +262,6 @@ ppj=j_Array[i_3];
 
      int *nnw, *nn, *nno, *nw, *no, *nsw, *ns, *nso;
 
-
     nnw=&matrix[y][x];
     nn =&matrix[y][yx];
     nno=&matrix[y][xx];
@@ -274,7 +270,6 @@ ppj=j_Array[i_3];
     nsw=&matrix[yy][x];
     ns =&matrix[yy][yx];
     nso=&matrix[yy][xx];
-
 
 
     if ( *nnw == ACTIVE ) {zaehler_2++ ; }
@@ -290,51 +285,52 @@ ppj=j_Array[i_3];
 
         fprintf(fp ,"%d,%d\n", ppi, ppj );
 
-
-            }
-
-         zaehler_2 = 0;
-
         }
+zaehler_2 = 0;
+
+}
     }
 
-
     }
-
 }
 
     	// printf("Adressen wurden geschrieben.\n");
 
           fclose(fp);
-
 }
 
-/****************************  MATRIX LEEREN  ************************************/
+/**************************************************************************************************************/
+/**********************************************  MATRIX LEEREN  ***********************************************/
+/**************************************************************************************************************/
+
 
     for (i = 0; i < zeile; i++) {
 
         for (j = 0 ; j < spalte; j++) {
 
-                matrix[i][j] = INACTIVE + INACTIVE;
+            matrix[i][j] = INACTIVE + INACTIVE;
         }
     }
-
 }
 
 /**************************************************************************************************************/
 /*****************************************  SPEICHER FREIGEBEN  ***********************************************/
 /**************************************************************************************************************/
 
+    printf("Speicher leeren\nEmpty memory\nYES ");
+    scanf("%d", &generation);
+
    /* Spalten freigeben */
 
    for(i = 0; i < zeile; i++)
+
       free(matrix[i]);
 
    /* Zeilen freigeben. */
 
    free(matrix);
 
-
 return 0;
+
 }
 
