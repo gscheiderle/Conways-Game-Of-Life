@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1579872195 source:c:\xampp\htdocs\a_aa_welt\a_aa_welt\main.c
+	<stdio.h>
+	<stdlib.h>
+
